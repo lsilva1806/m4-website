@@ -615,3 +615,57 @@ footer{
 .drawer-card a.btn.primary:hover{
   background: linear-gradient(135deg, #d45116, #9a3412);
 }
+/* ===== Gallery slider (groups) ===== */
+.gallery-wrap{ margin-top: 10px; }
+.gallery-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.gallery-nav{ display:flex; gap: 10px; }
+.gbtn{
+  padding: 9px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(176,186,198,.28);
+  background: rgba(255,255,255,.06);
+  color: var(--white);
+  font-weight: 800;
+  cursor:pointer;
+}
+.gbtn:hover{
+  background: rgba(255,255,255,.09);
+  border-color: rgba(176,186,198,.38);
+  transform: translateY(-1px);
+}
+
+.gallery-dots{ display:flex; gap: 8px; flex-wrap:wrap; }
+.gdot{
+  width: 9px; height: 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(176,186,198,.35);
+  background: rgba(255,255,255,.10);
+  cursor:pointer;
+}
+.gdot.is-active{
+  background: linear-gradient(135deg, var(--orange), #9a3412);
+  border-color: rgba(255,255,255,.18);
+}
+
+.gallery-viewport{
+  overflow:hidden;
+  border-radius: 18px;
+}
+.gallery-track{
+  display:flex;
+  transition: transform .35s ease;
+  will-change: transform;
+}
+.gallery-page{
+  flex: 0 0 100%;
+}
+
+/* keep your existing .gallery and .g rules */
+/* Desktop: 3 cols (already) */
+/* Mobile from your CSS: .gallery becomes 2 cols / 1 col */
