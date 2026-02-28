@@ -611,7 +611,7 @@
 	
 	    const cardW = card.getBoundingClientRect().width;
 	    const gap = parseFloat(getComputedStyle(track).gap || '12');
-	    const step = (cardW * pv) + (gap * (pv - 1));
+	    const step = (cardW + gap) * pv;
 	
 	    track.style.transform = `translateX(${-idx * step}px)`;
 	
@@ -634,13 +634,11 @@
 	    const dir = parseInt(btn.dataset.rdir, 10) || 0;
 	
 	    btn.addEventListener('click', ()=> go(dir));
-	
-	    btn.addEventListener('touchend', (e)=>{
-	      e.preventDefault();
-	      go(dir);
-	    }, { passive:false });
-	
-	    btn.addEventListener('pointerup', ()=> go(dir));
+
+		btn.addEventListener('touchend', (e)=>{
+		  e.preventDefault();
+		  go(dir);
+		}, { passive:false });
 	  });
 	
 	  // Swipe (mobile): left/right to change
