@@ -593,8 +593,13 @@
 		    if(!card) return;
 		
 		    const cardW = card.getBoundingClientRect().width;
-		    const gap = 12; // matches CSS
-		    const step = (cardW + gap) * pv;
+		    // Lee el gap real desde CSS (mejor que hardcodear 12)
+			const gap = parseFloat(getComputedStyle(track).gap || '12');
+			
+			// Ancho exacto de una “página”: pv cards + (pv-1) gaps
+			const step = (cardW * pv) + (gap * (pv - 1));
+			
+			track.style.transform = `translateX(${-idx * step}px)`;
 		
 		    // Clamp idx to valid pages after resize
 		    const pc = pageCount();
