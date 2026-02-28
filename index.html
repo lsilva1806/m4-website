@@ -1,0 +1,896 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>M4 Maintenance Services LLC | Painting • Drywall • Residential Remodeling (Florida)</title>
+  <meta name="description" content="M4 Maintenance Services LLC — Painting, Drywall & Residential Remodeling across Miami-Dade, Broward & Palm Beach. 20+ years of experience. Request a free estimate." />
+  <meta name="theme-color" content="#001632" />
+
+  <!-- Optional: Montserrat (comment out if you prefer no external fonts)
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+  -->
+
+  <style>
+    :root{
+      /* Brand palette (from logo) */
+      --navy:#001632;
+      --navy2:#002c5e;
+      --blue:#014ca1;
+      --blue2:#015ec2;
+      --silver:#b0bac6;
+      --silver2:#aeafb4;
+      --white:#f7f7f7;
+
+      /* Accent */
+      --orange:#c2410c;
+
+      /* UI */
+      --glass: rgba(255,255,255,.10);
+      --glass2: rgba(255,255,255,.16);
+      --line: rgba(255,255,255,.12);
+      --muted: rgba(255,255,255,.78);
+      --muted2: rgba(255,255,255,.62);
+      --shadow: 0 18px 45px rgba(0,0,0,.38);
+      --radius: 18px;
+      --radius2: 22px;
+      --max: 1120px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+   body{
+	  margin:0;
+	  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", Helvetica, sans-serif;
+	  color: var(--white);
+	  line-height:1.35;
+	  background: transparent;      /* <-- importante */
+	  position: relative;
+	  min-height: 100%;
+	}
+	
+	body::before{
+	  content:"";
+	  position: fixed;
+	  inset: 0;
+	  z-index: -1;
+	  background:
+	    radial-gradient(1200px 700px at 75% 10%, rgba(1, 94, 194, .35), transparent 60%),
+	    radial-gradient(900px 600px at 15% 0%, rgba(0, 44, 94, .45), transparent 58%),
+	    linear-gradient(135deg, #001632 0%, #002c5e 45%, #014ca1 100%);
+	  background-repeat: no-repeat;
+	  background-size: cover;
+	}
+
+    a{ color:inherit; text-decoration:none; }
+    img{ max-width:100%; display:block; }
+    .wrap{ width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
+
+    /* Header */
+    header{
+      position: sticky;
+      top:0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      background: rgba(0, 22, 50, .78);
+      border-bottom: 1px solid rgba(176,186,198,.22);
+    }
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 14px;
+      padding: 12px 0;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      min-width: 220px;
+    }
+    .brandmark{
+      width: 46px; height: 46px;
+      border-radius: 14px;
+      overflow:hidden;
+      border: 1px solid rgba(176,186,198,.35);
+      background: rgba(255,255,255,.06);
+      box-shadow: 0 10px 20px rgba(0,0,0,.25);
+      display:grid;
+      place-items:center;
+    }
+    .brandmark img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+    .brand b{ font-size: 14px; letter-spacing:.3px; }
+    .brand small{ display:block; color: rgba(176,186,198,.92); font-size: 12px; margin-top:2px; }
+
+    .menu{
+      display:flex; align-items:center; gap: 14px;
+    }
+    .menu a{
+      font-size: 13px;
+      color: rgba(255,255,255,.80);
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+    }
+    .menu a:hover{
+      color: var(--white);
+      background: rgba(255,255,255,.06);
+      border-color: rgba(176,186,198,.22);
+    }
+
+    .actions{ display:flex; gap: 10px; align-items:center; }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      border: 1px solid rgba(176,186,198,.28);
+      background: rgba(255,255,255,.06);
+      color: var(--white);
+      font-weight: 700;
+      font-size: 13px;
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.09); border-color: rgba(176,186,198,.38); }
+    .btn.primary{
+      background: linear-gradient(135deg, var(--orange), #9a3412);
+      border-color: rgba(255,255,255,.18);
+      box-shadow: 0 14px 30px rgba(194,65,12,.25);
+    }
+    .btn.primary:hover{ background: linear-gradient(135deg, #d45116, #9a3412); }
+
+    .hamburger{ display:none; }
+
+    /* Hero */
+    .hero{ padding: 54px 0 26px; }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .card{
+      border-radius: var(--radius2);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+      border: 1px solid rgba(176,186,198,.22);
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    /* Subtle “silver sweep” like your 4 */
+    .card::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(540px 220px at 82% 18%, rgba(176,186,198,.18), transparent 60%),
+        radial-gradient(520px 220px at 14% 14%, rgba(1, 94, 194,.18), transparent 60%);
+      pointer-events:none;
+      opacity:.95;
+    }
+    .card > *{ position:relative; z-index:1; }
+
+    .hero-left{ padding: 28px; }
+    .pill-row{ display:flex; flex-wrap:wrap; gap: 10px; margin-bottom: 14px; }
+    .pill{
+      display:inline-flex; gap: 8px; align-items:center;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(176,186,198,.26);
+      background: rgba(0, 22, 50, .30);
+      color: rgba(255,255,255,.82);
+      font-size: 12px;
+    }
+    .pill strong{ color: var(--white); font-weight: 800; }
+
+    h1{
+      margin: 10px 0 10px;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.05;
+      letter-spacing: -0.6px;
+    }
+    .lead{
+      margin: 0 0 18px;
+      color: rgba(255,255,255,.82);
+      font-size: 15px;
+      max-width: 55ch;
+    }
+    .hero-cta{ display:flex; flex-wrap:wrap; gap: 10px; margin-top: 16px; }
+
+    .trust{
+      display:flex; gap: 14px; flex-wrap:wrap;
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(176,186,198,.22);
+    }
+    .trust .t{
+      min-width: 170px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(176,186,198,.22);
+      background: rgba(255,255,255,.05);
+    }
+    .trust .t b{ display:block; font-size: 13px; }
+    .trust .t small{ color: rgba(176,186,198,.92); font-size: 12px; display:block; margin-top: 3px; }
+
+    .hero-right{
+      padding: 16px;
+      display:flex;
+      flex-direction:column;
+      gap: 12px;
+    }
+    .hero-photo{
+      border-radius: 18px;
+      overflow:hidden;
+      border: 1px solid rgba(176,186,198,.22);
+      background: rgba(255,255,255,.06);
+      position:relative;
+      min-height: 220px;
+    }
+    .hero-photo::before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,0)),
+        radial-gradient(560px 240px at 85% 20%, rgba(176,186,198,.22), transparent 60%),
+        radial-gradient(520px 240px at 15% 10%, rgba(1, 94, 194,.20), transparent 60%);
+    }
+    .ph-label{
+      position:absolute;
+      bottom: 14px; left: 14px;
+      right: 14px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(0, 22, 50, .55);
+      border: 1px solid rgba(176,186,198,.22);
+      color: rgba(255,255,255,.80);
+      font-size: 12px;
+    }
+    .quote{
+      padding: 16px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(176,186,198,.22);
+    }
+    .quote b{ display:block; }
+    .quote small{ color: rgba(176,186,198,.92); display:block; margin-top: 6px; font-size: 12px; }
+
+    /* Sections */
+    section{ padding: 42px 0; }
+    .section-head{
+      display:flex;
+      align-items:end;
+      justify-content:space-between;
+      gap: 18px;
+      margin-bottom: 16px;
+    }
+    .section-head h2{
+      margin:0;
+      font-size: 22px;
+      letter-spacing: -.3px;
+    }
+    .section-head p{
+      margin:0;
+      color: rgba(176,186,198,.92);
+      max-width: 62ch;
+      font-size: 13px;
+    }
+
+    .grid-2{ display:grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .grid-3{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+
+    .panel{
+      padding: 18px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(176,186,198,.22);
+    }
+    .kpi{ display:flex; gap: 12px; align-items:flex-start; }
+    .ic{
+      width: 40px; height: 40px;
+      border-radius: 14px;
+      display:grid; place-items:center;
+      background: linear-gradient(135deg, rgba(176,186,198,.18), rgba(255,255,255,.06));
+      border: 1px solid rgba(176,186,198,.22);
+      flex: 0 0 auto;
+      font-weight: 900;
+    }
+    .kpi b{ display:block; font-size: 14px; }
+    .kpi small{ display:block; color: rgba(176,186,198,.92); margin-top: 5px; font-size: 12px; }
+
+    /* Services */
+    .service{
+      padding: 18px;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.05));
+      border: 1px solid rgba(176,186,198,.22);
+      overflow:hidden;
+      position:relative;
+    }
+    .service::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(520px 160px at 22% 12%, rgba(1, 94, 194,.16), transparent 60%),
+        radial-gradient(520px 160px at 92% 10%, rgba(176,186,198,.18), transparent 60%);
+      pointer-events:none;
+      opacity:.95;
+    }
+    .service > *{ position:relative; z-index:1; }
+    .service h3{ margin: 0 0 8px; font-size: 16px; }
+    .service p{ margin: 0 0 10px; color: rgba(255,255,255,.80); font-size: 13px; }
+    .tags{ display:flex; flex-wrap:wrap; gap: 8px; }
+    .tag{
+      font-size: 12px;
+      color: rgba(255,255,255,.82);
+      padding: 6px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(176,186,198,.22);
+      background: rgba(0, 22, 50, .30);
+    }
+
+    /* Gallery */
+	.gallery{
+	  display:grid;
+	  grid-template-columns: repeat(3, 1fr);
+	  gap: 14px;
+	}
+    .g{
+      border-radius: 16px;
+      overflow:hidden;
+      border: 1px solid rgba(176,186,198,.22);
+      background: rgba(255,255,255,.06);
+  	  min-height: 240px;
+      position:relative;
+	  
+	  min-height: 240px;
+	  border-radius: 16px;
+	  border: 1px solid rgba(176,186,198,.22);
+	  background-size: cover;
+	  background-position: center;
+	  background-repeat: no-repeat;
+	  transition: transform .3s ease;
+	}
+	
+	.g:hover{
+	  transform: scale(1.02);
+	}
+	
+    .g::before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,0)),
+        radial-gradient(380px 160px at 20% 10%, rgba(1, 94, 194,.14), transparent 60%),
+        radial-gradient(380px 160px at 90% 10%, rgba(176,186,198,.14), transparent 60%);
+    }
+    .g span{
+      position:absolute;
+      left: 12px; bottom: 10px;
+      padding: 6px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      color: rgba(255,255,255,.82);
+      background: rgba(0, 22, 50, .55);
+      border: 1px solid rgba(176,186,198,.22);
+    }
+    .g1{ grid-column: span 5; }
+    .g2{ grid-column: span 4; }
+    .g3{ grid-column: span 3; }
+    .g4{ grid-column: span 4; }
+    .g5{ grid-column: span 4; }
+    .g6{ grid-column: span 4; }
+
+    /* Contact */
+    .contact{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      align-items:stretch;
+    }
+    form{ display:flex; flex-direction:column; gap: 10px; }
+    label{ font-size: 12px; color: rgba(176,186,198,.92); }
+    input, textarea{
+      width:100%;
+      padding: 11px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(176,186,198,.26);
+      background: rgba(0, 22, 50, .40);
+      color: var(--white);
+      outline:none;
+    }
+    textarea{ min-height: 110px; resize: vertical; }
+    input:focus, textarea:focus{
+      border-color: rgba(255,255,255,.30);
+      box-shadow: 0 0 0 3px rgba(176,186,198,.18);
+    }
+    .contact-card{
+      padding: 18px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(176,186,198,.22);
+      display:flex;
+      flex-direction:column;
+      gap: 12px;
+    }
+    .contact-card .row{
+      display:flex; gap: 12px; align-items:flex-start;
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(176,186,198,.18);
+      background: rgba(255,255,255,.05);
+    }
+    .contact-card .row b{ display:block; font-size: 13px; }
+    .contact-card .row small{ color: rgba(176,186,198,.92); display:block; margin-top: 3px; font-size: 12px; }
+
+    /* Footer */
+    footer{
+      padding: 22px 0 30px;
+      border-top: 1px solid rgba(176,186,198,.22);
+      color: rgba(176,186,198,.92);
+      font-size: 12px;
+    }
+    .foot{ display:flex; justify-content:space-between; align-items:center; gap: 14px; flex-wrap:wrap; }
+
+    /* Mobile */
+    @media (max-width: 980px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .grid-3{ grid-template-columns: 1fr; }
+      .grid-2{ grid-template-columns: 1fr; }
+      .contact{ grid-template-columns: 1fr; }
+    }
+    @media (max-width: 780px){
+      .menu{ display:none; }
+      .hamburger{ display:inline-flex; }
+      .actions .btn{ padding: 10px 12px; }
+      .g1,.g2,.g3,.g4,.g5,.g6{ grid-column: span 12; }
+    }
+
+    /* Floating mobile call button */
+    .float-call{
+      position: fixed;
+      right: 14px;
+      bottom: 14px;
+      z-index: 60;
+      display:none;
+      border-radius: 999px;
+      padding: 12px 14px;
+      background: linear-gradient(135deg, var(--orange), #9a3412);
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: 0 16px 40px rgba(194,65,12,.28);
+      font-weight: 800;
+    }
+    @media (max-width: 780px){
+      .float-call{ display:inline-flex; }
+    }
+
+    /* Drawer */
+    .drawer{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(6px);
+      z-index: 70;
+      display:none;
+      padding: 16px;
+    }
+    .drawer.open{ display:block; }
+    .drawer-card{
+      width: min(520px, 100%);
+      margin-left:auto;
+      border-radius: 20px;
+      border: 1px solid rgba(176,186,198,.22);
+      background: rgba(0, 22, 50, .92);
+      box-shadow: var(--shadow);
+      padding: 14px;
+    }
+    .drawer-card a{
+      display:block;
+      padding: 12px 12px;
+      border-radius: 14px;
+      color: rgba(255,255,255,.84);
+      border: 1px solid transparent;
+    }
+    .drawer-card a:hover{
+      color: var(--white);
+      background: rgba(255,255,255,.07);
+      border-color: rgba(176,186,198,.20);
+    }
+    .drawer-top{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 8px 8px 12px;
+      border-bottom: 1px solid rgba(176,186,198,.22);
+      margin-bottom: 10px;
+    }
+	section{ background: transparent; }
+	main{ background: transparent; }
+	
+	.hero-photo{
+	  border-radius: 18px;
+	  border: 1px solid rgba(176,186,198,.22);
+	  min-height: 320px;
+	
+	  background-image: url('https://images.unsplash.com/photo-1503387762-592deb58ef4e');
+	  background-size: cover;
+	  background-position: center;
+	  background-repeat: no-repeat;
+	}
+	
+  </style>
+</head>
+
+<body>
+  <!-- Mobile Drawer -->
+  <div class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-card" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="drawer-top">
+        <div class="brand">
+          <div class="brandmark">
+            <img src="/Users/lsilva01/Documents/IMG_5519.jpg" alt="M4 logo" onerror="this.style.display='none'; this.parentElement.textContent='M4';">
+          </div>
+          <div>
+            <b>M4 Maintenance Services LLC</b>
+            <small>Tri-County • Florida</small>
+          </div>
+        </div>
+        <button class="btn" type="button" id="closeDrawer">Close</button>
+      </div>
+
+      <a href="#about" class="drawer-link">About</a>
+      <a href="#services" class="drawer-link">Services</a>
+      <a href="#gallery" class="drawer-link">Gallery</a>
+      <a href="#contact" class="drawer-link">Contact</a>
+
+      <div style="display:flex; gap:10px; margin-top:12px;">
+        <a class="btn primary" href="#contact" style="flex:1;">Request Estimate</a>
+        <a class="btn" href="tel:+13050000000" style="flex:1;">Call Now</a>
+      </div>
+    </div>
+  </div>
+
+  <header>
+    <div class="wrap">
+      <div class="nav">
+        <a class="brand" href="#top">
+          <div class="brandmark">
+            <img src="/Users/lsilva01/Documents/IMG_5519.jpg" alt="M4 logo">
+          </div>
+          <div>
+            <b>M4 Maintenance Services LLC</b>
+            <small>Miami-Dade • Broward • Palm Beach</small>
+          </div>
+        </a>
+
+        <nav class="menu" aria-label="Primary">
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="actions">
+          <a class="btn" href="tel:+13050000000" aria-label="Call Now">Call Now</a>
+          <a class="btn primary" href="#contact">Request Estimate</a>
+          <button class="btn hamburger" type="button" id="openDrawer" aria-label="Open Menu">Menu</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <div class="wrap hero">
+      <div class="hero-grid">
+        <div class="card hero-left">
+		
+          <div class="pill-row">
+            <div class="pill"><strong>20+ Years</strong> experience</div>
+            <div class="pill">Tri-County Florida</div>
+            <div class="pill">Quality • Reliability • Craftsmanship</div>
+          </div>
+
+          <h1>High-Quality Residential Work — Done Clean, Done Right.</h1>
+		  
+          <p class="lead">
+            <b>M4 Maintenance Services LLC</b> specializes in <b>Painting</b>, <b>Drywall</b>,
+            and <b>Residential Remodeling</b> for homeowners across <b>Miami-Dade</b>, <b>Broward</b>, and <b>Palm Beach</b>.
+          </p>
+
+          <div class="hero-cta">
+            <a class="btn primary" href="#contact">Request a Free Estimate</a>
+            <a class="btn" href="#services">View Services</a>
+          </div>
+
+          <div class="trust" aria-label="Highlights">
+            <div class="t">
+              <b>Professional Finish</b>
+              <small>Prep + detail-first approach.</small>
+            </div>
+            <div class="t">
+              <b>Reliable Scheduling</b>
+              <small>Clear scope and communication.</small>
+            </div>
+            <div class="t">
+              <b>Licensed & Insured</b>
+              <small>(Update this line as needed.)</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="card hero-right">
+          <div class="hero-photo"></div>
+            <div class="ph-label">
+              Placeholder image — replace with a real project photo (kitchen, living room, exterior, etc.).
+            </div>
+          </div>
+          <div class="quote">
+            <b>“We stand behind our work — quality, durability, and a clean jobsite.”</b>
+            <small>
+              From repairs to remodels — we treat every home with care.
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>About Us</h2>
+          <p>Built on experience, quality workmanship, and long-term results — not shortcuts.</p>
+        </div>
+
+        <div class="grid-2">
+          <div class="panel">
+            <div class="kpi">
+              <div class="ic">★</div>
+              <div>
+                <b>20+ Years of Experience</b>
+                <small>Consistent results with proven methods and attention to detail.</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="kpi">
+              <div class="ic">✔</div>
+              <div>
+                <b>Quality • Backup • Peace of Mind</b>
+                <small>Clear scope, clean execution, and a final walkthrough you’ll feel good about.</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="kpi">
+              <div class="ic">⏱</div>
+              <div>
+                <b>Reliable Scheduling</b>
+                <small>Respect for your time and your home. Communication throughout the project.</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="kpi">
+              <div class="ic">📍</div>
+              <div>
+                <b>Tri-County Service Area</b>
+                <small>Miami-Dade • Broward • Palm Beach</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Services</h2>
+          <p>Residential services delivered with a professional finish and durable results.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="service">
+            <h3>Painting</h3>
+            <p>Interior & exterior painting with correct prep, clean edges, and strong durability.</p>
+            <div class="tags">
+              <span class="tag">Interior</span>
+              <span class="tag">Exterior</span>
+              <span class="tag">Cabinets</span>
+              <span class="tag">Surface prep</span>
+            </div>
+          </div>
+
+          <div class="service">
+            <h3>Drywall</h3>
+            <p>Installation, repairs, finishing & textures — smooth walls ready for paint.</p>
+            <div class="tags">
+              <span class="tag">Patching</span>
+              <span class="tag">Taping</span>
+              <span class="tag">Finishing</span>
+              <span class="tag">Textures</span>
+            </div>
+          </div>
+
+          <div class="service">
+            <h3>Residential Remodeling</h3>
+            <p>Upgrades and renovations that improve comfort, function, and home value.</p>
+            <div class="tags">
+              <span class="tag">Kitchens</span>
+              <span class="tag">Bathrooms</span>
+              <span class="tag">Flooring</span>
+              <span class="tag">General upgrades</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;" class="panel">
+          <b style="display:block; font-size:14px;">Need something specific?</b>
+          <div style="color:rgba(176,186,198,.92); font-size:12px; margin-top:6px;">
+            Tell us what you want done — we’ll recommend options and provide a clear estimate.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Gallery</h2>
+          <p>Placeholders for now — swap each block with real before/after photos anytime.</p>
+        </div>
+
+	<div class="gallery">
+	  <div class="g" style="background-image:url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80')"></div>
+	
+	  <div class="g" style="background-image:url('/Users/lsilva01/Documents/IMG_5519.jpg?auto=format&fit=crop&w=1200&q=80')"></div>
+	
+	  <div class="g" style="background-image:url('https://images.unsplash.com/photo-1501183638710-841dd1904471?auto=format&fit=crop&w=1200&q=80')"></div>
+	
+	  <div class="g" style="background-image:url('https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80')"></div>
+	
+	  <div class="g" style="background-image:url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80')"></div>
+	
+	  <div class="g" style="background-image:url('https://images.unsplash.com/photo-1560185008-b033106af5c3?auto=format&fit=crop&w=1200&q=80')"></div>
+	</div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Contact Us</h2>
+          <p>Request a free estimate — we’ll get back to you as soon as possible.</p>
+        </div>
+
+        <div class="contact">
+          <div class="panel">
+            <form id="contactForm">
+              <div>
+                <label for="name">Full Name</label>
+                <input id="name" name="name" placeholder="Your name" required />
+              </div>
+
+              <div>
+                <label for="phone">Phone</label>
+                <input id="phone" name="phone" placeholder="(305) 000-0000" />
+              </div>
+
+              <div>
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="you@email.com" required />
+              </div>
+
+              <div>
+                <label for="message">Message</label>
+                <textarea id="message" name="message" placeholder="Tell us what you need (painting, drywall, remodel, etc.)" required></textarea>
+              </div>
+
+              <button class="btn primary" type="submit">Send Message</button>
+
+              <div style="color:rgba(176,186,198,.92); font-size:12px;">
+                Tip: connect this form to your backend, Formspree, Google Forms, etc.
+              </div>
+            </form>
+          </div>
+
+          <div class="contact-card">
+            <div class="row">
+              <div class="ic">📞</div>
+              <div>
+                <b>Phone</b>
+                <small><a href="tel:+13050000000">+1 (305) 000-0000</a> (replace)</small>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="ic">✉</div>
+              <div>
+                <b>Email</b>
+                <small><a href="mailto:info@m4services.com">info@m4services.com</a> (replace)</small>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="ic">📍</div>
+              <div>
+                <b>Service Area</b>
+                <small>Miami-Dade • Broward • Palm Beach (Tri-County)</small>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="ic">✔</div>
+              <div>
+                <b>Licensed & Insured</b>
+                <small>(Update this text based on your status.)</small>
+              </div>
+            </div>
+
+            <a class="btn primary" href="tel:+13050000000" style="margin-top:2px;">Call Now</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <a class="float-call" href="tel:+13050000000" aria-label="Call Now (floating)">Call Now</a>
+
+  <footer>
+    <div class="wrap foot">
+      <div>© <span id="year"></span> M4 Maintenance Services LLC. All rights reserved.</div>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <a href="#top" class="btn">Back to top</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const id = a.getAttribute('href');
+        if (!id || id === '#') return;
+        const el = document.querySelector(id);
+        if (!el) return;
+        e.preventDefault();
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        const drawer = document.getElementById('drawer');
+        if (drawer.classList.contains('open')) drawer.classList.remove('open');
+      });
+    });
+
+    const drawer = document.getElementById('drawer');
+    document.getElementById('openDrawer')?.addEventListener('click', () => drawer.classList.add('open'));
+    document.getElementById('closeDrawer')?.addEventListener('click', () => drawer.classList.remove('open'));
+    drawer.addEventListener('click', (e) => { if (e.target === drawer) drawer.classList.remove('open'); });
+
+    document.getElementById('contactForm')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      alert('Thanks! Your message is ready to be sent. Connect this form to your email/backend.');
+      e.target.reset();
+    });
+  </script>
+</body>
+</html>
