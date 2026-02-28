@@ -658,3 +658,6 @@
   .float-ctas{ display:flex; }
   footer{ padding-bottom: 92px; } /* espacio para que no tape el footer */
 }
+@media (max-width: 780px){
+  .brandmark{ width:44px; height:44px; }
+}
