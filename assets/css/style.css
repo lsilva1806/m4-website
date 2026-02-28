@@ -754,3 +754,5 @@ footer{
 
   .review{ flex-basis: 100%; } /* 1 per screen */
 }
+.reviews-track{ align-items: stretch; }
+.review{ height: 100%; }
