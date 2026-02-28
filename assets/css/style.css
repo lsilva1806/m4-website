@@ -589,3 +589,33 @@
   .gallery{ grid-template-columns: 1fr !important; }
   .g{ min-height: 160px !important; }
 }
+/* ===== Mobile header cleanup + logo space ===== */
+@media (max-width: 780px){
+  /* Deja espacio real al logo y al nombre */
+  .brand{
+    min-width: 0 !important;
+    flex: 1 1 auto;
+    gap: 10px;
+  }
+  .brand b{
+    display: block;
+    font-size: 13px;
+    line-height: 1.1;
+    max-width: 40vw;            /* evita que empuje al botón Menu */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .brand small{
+    display: block;
+    font-size: 11px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: .9;
+  }
+
+  /* En móvil, en la barra solo dejamos el botón Menu */
+  .actions a.btn{ display:none !important; }        /* oculta Call/Estimate dentro del header */
+  .actions .hamburger{ display:inline-flex !important; }
+}
