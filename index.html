@@ -283,6 +283,46 @@
 		</div>
       </div>
     </section>
+	  
+	<!-- REVIEWS -->
+	<section id="reviews">
+	  <div class="wrap">
+	    <div class="section-head">
+	      <h2>Reviews</h2>
+	      <p>Real customer feedback — (mock for now). We’ll connect Google Reviews later.</p>
+	    </div>
+	
+	    <div class="reviews-head panel">
+	      <div class="rh-left">
+	        <div class="stars" aria-label="Google rating stars">★★★★★</div>
+	        <div class="rating-line">
+	          <b id="grRating">4.9</b>
+	          <span class="muted">/ 5.0</span>
+	          <span class="dot">•</span>
+	          <span class="muted"><span id="grCount">87</span> reviews</span>
+	        </div>
+	      </div>
+	
+	      <a class="btn" id="grLink" href="#" target="_blank" rel="noopener">Read on Google</a>
+	    </div>
+	
+	    <div class="reviews-wrap" data-autoplay="false" data-interval="6000">
+	      <div class="reviews-top">
+	        <div class="reviews-dots" aria-label="Reviews pagination"></div>
+	        <div class="reviews-nav" aria-label="Reviews controls">
+	          <button class="gbtn" type="button" data-rdir="-1">Prev</button>
+	          <button class="gbtn" type="button" data-rdir="1">Next</button>
+	        </div>
+	      </div>
+	
+	      <div class="reviews-viewport">
+	        <div class="reviews-track" id="reviewsTrack">
+	          <!-- JS injects review cards here -->
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</section>	  
 
     <!-- CONTACT -->
     <section id="contact">
@@ -472,5 +512,141 @@
 		  start();
 		})();
 	</script>
+	<script>
+		(function(){
+		  const track = document.getElementById('reviewsTrack');
+		  const wrap = document.querySelector('.reviews-wrap');
+		  const dotsHost = document.querySelector('.reviews-dots');
+		  if(!track || !wrap || !dotsHost) return;
+		
+		  // ===== MOCK DATA (replace later with Google data) =====
+		  const mock = {
+		    rating: 4.9,
+		    total: 87,
+		    googleUrl: "https://www.google.com/maps", // placeholder for now
+		    reviews: [
+		      { name:"Carlos M.", stars:5, time:"2 weeks ago", text:"Very professional work. Drywall repair and painting came out clean and on schedule. Communication was excellent." },
+		      { name:"Ana R.", stars:5, time:"1 month ago", text:"Great remodeling help for our condo. They were punctual, respectful, and the finishing details looked premium." },
+		      { name:"James P.", stars:5, time:"3 weeks ago", text:"Fast estimate, fair price, and the team kept everything tidy. Would hire again for future projects." },
+		      { name:"María G.", stars:5, time:"2 months ago", text:"They fixed water-damaged drywall and repainted the whole room. Looks brand new. Highly recommended." },
+		      { name:"Luis F.", stars:5, time:"5 days ago", text:"Reliable and honest. They explained options clearly and delivered exactly what was promised." },
+		      { name:"Sofia T.", stars:5, time:"6 weeks ago", text:"Excellent interior painting. Crisp lines, clean edges, and no mess left behind." },
+		      { name:"Robert K.", stars:5, time:"3 months ago", text:"Solid craftsmanship. Remodeled our bathroom and handled everything smoothly." },
+		      { name:"Daniela V.", stars:5, time:"4 weeks ago", text:"Professional from start to finish. Quality work and great follow-up after completion." }
+		    ]
+		  };
+		
+		  // header values
+		  document.getElementById('grRating').textContent = mock.rating.toFixed(1);
+		  document.getElementById('grCount').textContent = String(mock.total);
+		  const gl = document.getElementById('grLink');
+		  gl.href = mock.googleUrl;
+		
+		  // render cards
+		  function starStr(n){ return "★★★★★".slice(0,n) + "☆☆☆☆☆".slice(0,5-n); }
+		  track.innerHTML = mock.reviews.map(r => `
+		    <article class="review">
+		      <div class="review-top">
+		        <div>
+		          <div class="review-name">${escapeHtml(r.name)}</div>
+		          <div class="review-stars">${starStr(r.stars)}</div>
+		        </div>
+		        <div class="review-time">${escapeHtml(r.time)}</div>
+		      </div>
+		      <div class="review-text">${escapeHtml(r.text)}</div>
+		    </article>
+		  `).join("");
+		
+		  // ===== Carousel logic =====
+		  const interval = parseInt(wrap.dataset.interval || '6000', 10);
+		  const autoplay = (wrap.dataset.autoplay || 'false') === 'true';
+		
+		  let idx = 0;
+		  let timer = null;
+		
+		  function perView(){
+		    const w = window.innerWidth;
+		    if(w <= 780) return 1;
+		    if(w <= 980) return 3;
+		    return 5;
+		  }
+		
+		  function pageCount(){
+		    return Math.max(1, Math.ceil(mock.reviews.length / perView()));
+		  }
+		
+		  function buildDots(){
+		    dotsHost.innerHTML = "";
+		    for(let i=0;i<pageCount();i++){
+		      const d = document.createElement('button');
+		      d.type = 'button';
+		      d.className = 'rdot' + (i===idx ? ' is-active' : '');
+		      d.setAttribute('aria-label', 'Go to page ' + (i+1));
+		      d.addEventListener('click', ()=>{ idx=i; render(true); });
+		      dotsHost.appendChild(d);
+		    }
+		  }
+		
+		  function render(user=false){
+		    const pv = perView();
+		    const card = track.querySelector('.review');
+		    if(!card) return;
+		
+		    const cardW = card.getBoundingClientRect().width;
+		    const gap = 12; // matches CSS
+		    const step = (cardW + gap) * pv;
+		
+		    // Clamp idx to valid pages after resize
+		    const pc = pageCount();
+		    if(idx > pc-1) idx = pc-1;
+		
+		    track.style.transform = `translateX(${-idx * step}px)`;
+		
+		    // update dots
+		    Array.from(dotsHost.querySelectorAll('.rdot')).forEach((d,i)=>{
+		      d.classList.toggle('is-active', i===idx);
+		    });
+		
+		    if(user) restart();
+		  }
+		
+		  function go(dir){
+		    const pc = pageCount();
+		    idx = (idx + dir + pc) % pc;
+		    render(true);
+		  }
+		
+		  wrap.querySelectorAll('[data-rdir]').forEach(btn=>{
+		    btn.addEventListener('click', ()=> go(parseInt(btn.dataset.rdir,10)));
+		  });
+		
+		  function start(){
+		    if(!autoplay || pageCount() <= 1) return;
+		    stop();
+		    timer = setInterval(()=>{ go(1); }, interval);
+		  }
+		  function stop(){ if(timer){ clearInterval(timer); timer=null; } }
+		  function restart(){ stop(); start(); }
+		
+		  wrap.addEventListener('mouseenter', stop);
+		  wrap.addEventListener('mouseleave', start);
+		  wrap.addEventListener('touchstart', stop, {passive:true});
+		  wrap.addEventListener('touchend', start, {passive:true});
+		  window.addEventListener('resize', ()=>{ buildDots(); render(false); });
+		
+		  function escapeHtml(s){
+		    return String(s)
+		      .replaceAll('&','&amp;')
+		      .replaceAll('<','&lt;')
+		      .replaceAll('>','&gt;')
+		      .replaceAll('"','&quot;')
+		      .replaceAll("'","&#039;");
+		  }
+		
+		  buildDots();
+		  render(false);
+		  start();
+		})();
+		</script>
 </body>
 </html>
