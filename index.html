@@ -515,137 +515,179 @@
 		})();
 	</script>
 	<script>
-		(function(){
-		  const track = document.getElementById('reviewsTrack');
-		  const wrap = document.querySelector('.reviews-wrap');
-		  const dotsHost = document.querySelector('.reviews-dots');
-		  if(!track || !wrap || !dotsHost) return;
-		
-		  // ===== MOCK DATA (replace later with Google data) =====
-		  const mock = {
-		    rating: 4.9,
-		    total: 87,
-		    googleUrl: "https://www.google.com/maps", // placeholder for now
-		    reviews: [
-		      { name:"Carlos M.", stars:5, time:"2 weeks ago", text:"Very professional work. Drywall repair and painting came out clean and on schedule. Communication was excellent." },
-		      { name:"Ana R.", stars:5, time:"1 month ago", text:"Great remodeling help for our condo. They were punctual, respectful, and the finishing details looked premium." },
-		      { name:"James P.", stars:5, time:"3 weeks ago", text:"Fast estimate, fair price, and the team kept everything tidy. Would hire again for future projects." },
-		      { name:"María G.", stars:5, time:"2 months ago", text:"They fixed water-damaged drywall and repainted the whole room. Looks brand new. Highly recommended." },
-		      { name:"Luis F.", stars:5, time:"5 days ago", text:"Reliable and honest. They explained options clearly and delivered exactly what was promised." },
-		      { name:"Sofia T.", stars:5, time:"6 weeks ago", text:"Excellent interior painting. Crisp lines, clean edges, and no mess left behind." },
-		      { name:"Robert K.", stars:5, time:"3 months ago", text:"Solid craftsmanship. Remodeled our bathroom and handled everything smoothly." },
-		      { name:"Daniela V.", stars:5, time:"4 weeks ago", text:"Professional from start to finish. Quality work and great follow-up after completion." }
-		    ]
-		  };
-		
-		  // header values
-		  document.getElementById('grRating').textContent = mock.rating.toFixed(1);
-		  document.getElementById('grCount').textContent = String(mock.total);
-		  const gl = document.getElementById('grLink');
-		  gl.href = mock.googleUrl;
-		
-		  // render cards
-		  function starStr(n){ return "★★★★★".slice(0,n) + "☆☆☆☆☆".slice(0,5-n); }
-		  track.innerHTML = mock.reviews.map(r => `
-		    <article class="review">
-		      <div class="review-top">
-		        <div>
-		          <div class="review-name">${escapeHtml(r.name)}</div>
-		          <div class="review-stars">${starStr(r.stars)}</div>
-		        </div>
-		        <div class="review-time">${escapeHtml(r.time)}</div>
-		      </div>
-		      <div class="review-text">${escapeHtml(r.text)}</div>
-		    </article>
-		  `).join("");
-		
-		  // ===== Carousel logic =====
-		  const interval = parseInt(wrap.dataset.interval || '6000', 10);
-		  const autoplay = (wrap.dataset.autoplay || 'false') === 'true';
-		
-		  let idx = 0;
-		  let timer = null;
-		
-		  function perView(){
-		    const w = window.innerWidth;
-		    if(w <= 780) return 1;
-		    if(w <= 980) return 3;
-		    return 5;
-		  }
-		
-		  function pageCount(){
-		    return Math.max(1, Math.ceil(mock.reviews.length / perView()));
-		  }
-		
-		  function buildDots(){
-		    dotsHost.innerHTML = "";
-		    for(let i=0;i<pageCount();i++){
-		      const d = document.createElement('button');
-		      d.type = 'button';
-		      d.className = 'rdot' + (i===idx ? ' is-active' : '');
-		      d.setAttribute('aria-label', 'Go to page ' + (i+1));
-		      d.addEventListener('click', ()=>{ idx=i; render(true); });
-		      dotsHost.appendChild(d);
-		    }
-		  }
-		
-			function render(user=false){
-			  clampIdx();
-			
-			  const viewport = wrap.querySelector('.reviews-viewport');
-			  const vw = viewport.getBoundingClientRect().width;
-			
-			  track.style.transform = `translateX(${-idx * vw}px)`;
-			
-			  // update dots
-			  Array.from(dotsHost.querySelectorAll('.rdot')).forEach((d,i)=>{
-			    d.classList.toggle('is-active', i===idx);
-			  });
-			
-			  if(user) restart();
-			}
-		
-		  function go(dir){
-		    const pc = pageCount();
-		    idx = (idx + dir + pc) % pc;
-		    render(true);
-		  }
-		
-		  wrap.querySelectorAll('[data-rdir]').forEach(btn=>{
-		    btn.addEventListener('click', ()=> go(parseInt(btn.dataset.rdir,10)));
-		  });
-		
-		  function start(){
-		    if(!autoplay || pageCount() <= 1) return;
-		    stop();
-		    timer = setInterval(()=>{ go(1); }, interval);
-		  }
-		  function stop(){ if(timer){ clearInterval(timer); timer=null; } }
-		  function restart(){ stop(); start(); }
-		
-		  wrap.addEventListener('mouseenter', stop);
-		  wrap.addEventListener('mouseleave', start);
-		  wrap.addEventListener('touchstart', stop, {passive:true});
-		  wrap.addEventListener('touchend', start, {passive:true});
-		  window.addEventListener('resize', ()=>{
-			  clampIdx();
-			  buildDots();
-			  render(false);
-		  });
-		
-		  function escapeHtml(s){
-		    return String(s)
-		      .replaceAll('&','&amp;')
-		      .replaceAll('<','&lt;')
-		      .replaceAll('>','&gt;')
-		      .replaceAll('"','&quot;')
-		      .replaceAll("'","&#039;");
-		  }
-		
-		  buildDots();
-		  render(false);
-		  start();
-		})();
-		</script>
+	(function(){
+	  const track = document.getElementById('reviewsTrack');
+	  const wrap = document.querySelector('.reviews-wrap');
+	  const dotsHost = document.querySelector('.reviews-dots');
+	  const viewport = wrap?.querySelector('.reviews-viewport');
+	  if(!track || !wrap || !dotsHost || !viewport) return;
+	
+	  const mock = {
+	    rating: 4.9,
+	    total: 87,
+	    googleUrl: "https://www.google.com/maps",
+	    reviews: [
+	      { name:"Carlos M.", stars:5, time:"2 weeks ago", text:"Very professional work. Drywall repair and painting came out clean and on schedule. Communication was excellent." },
+	      { name:"Ana R.", stars:5, time:"1 month ago", text:"Great remodeling help for our condo. They were punctual, respectful, and the finishing details looked premium." },
+	      { name:"James P.", stars:5, time:"3 weeks ago", text:"Fast estimate, fair price, and the team kept everything tidy. Would hire again for future projects." },
+	      { name:"María G.", stars:5, time:"2 months ago", text:"They fixed water-damaged drywall and repainted the whole room. Looks brand new. Highly recommended." },
+	      { name:"Luis F.", stars:5, time:"5 days ago", text:"Reliable and honest. They explained options clearly and delivered exactly what was promised." },
+	      { name:"Sofia T.", stars:5, time:"6 weeks ago", text:"Excellent interior painting. Crisp lines, clean edges, and no mess left behind." },
+	      { name:"Robert K.", stars:5, time:"3 months ago", text:"Solid craftsmanship. Remodeled our bathroom and handled everything smoothly." },
+	      { name:"Daniela V.", stars:5, time:"4 weeks ago", text:"Professional from start to finish. Quality work and great follow-up after completion." }
+	    ]
+	  };
+	
+	  // header values
+	  document.getElementById('grRating').textContent = mock.rating.toFixed(1);
+	  document.getElementById('grCount').textContent = String(mock.total);
+	  const gl = document.getElementById('grLink');
+	  if(gl) gl.href = mock.googleUrl;
+	
+	  function escapeHtml(s){
+	    return String(s)
+	      .replaceAll('&','&amp;')
+	      .replaceAll('<','&lt;')
+	      .replaceAll('>','&gt;')
+	      .replaceAll('"','&quot;')
+	      .replaceAll("'","&#039;");
+	  }
+	  function starStr(n){ return "★★★★★".slice(0,n) + "☆☆☆☆☆".slice(0,5-n); }
+	
+	  // render cards
+	  track.innerHTML = mock.reviews.map(r => `
+	    <article class="review">
+	      <div class="review-top">
+	        <div>
+	          <div class="review-name">${escapeHtml(r.name)}</div>
+	          <div class="review-stars">${starStr(r.stars)}</div>
+	        </div>
+	        <div class="review-time">${escapeHtml(r.time)}</div>
+	      </div>
+	      <div class="review-text">${escapeHtml(r.text)}</div>
+	    </article>
+	  `).join("");
+	
+	  // ===== Carousel logic =====
+	  const interval = parseInt(wrap.dataset.interval || '6000', 10);
+	  const autoplay = (wrap.dataset.autoplay || 'false') === 'true';
+	  let idx = 0;
+	  let timer = null;
+	
+	  function perView(){
+	    const w = window.innerWidth;
+	    if(w <= 780) return 1;   // mobile
+	    if(w <= 980) return 3;   // tablet
+	    return 5;                // desktop
+	  }
+	
+	  function pageCount(){
+	    return Math.max(1, Math.ceil(mock.reviews.length / perView()));
+	  }
+	
+	  function buildDots(){
+	    dotsHost.innerHTML = "";
+	    const pc = pageCount();
+	    for(let i=0;i<pc;i++){
+	      const d = document.createElement('button');
+	      d.type = 'button';
+	      d.className = 'rdot' + (i===idx ? ' is-active' : '');
+	      d.setAttribute('aria-label', 'Go to page ' + (i+1));
+	      d.addEventListener('click', ()=>{ idx=i; render(true); });
+	      dotsHost.appendChild(d);
+	    }
+	  }
+	
+	  function render(user=false){
+	    const pv = perView();
+	
+	    // clamp idx if resize changes pc
+	    const pc = pageCount();
+	    if(idx > pc-1) idx = pc-1;
+	
+	    // measure step precisely
+	    const card = track.querySelector('.review');
+	    if(!card) return;
+	
+	    const cardW = card.getBoundingClientRect().width;
+	    const gap = parseFloat(getComputedStyle(track).gap || '12');
+	    const step = (cardW * pv) + (gap * (pv - 1));
+	
+	    track.style.transform = `translateX(${-idx * step}px)`;
+	
+	    // update dots
+	    Array.from(dotsHost.querySelectorAll('.rdot')).forEach((d,i)=>{
+	      d.classList.toggle('is-active', i===idx);
+	    });
+	
+	    if(user) restart();
+	  }
+	
+	  function go(dir){
+	    const pc = pageCount();
+	    idx = (idx + dir + pc) % pc;
+	    render(true);
+	  }
+	
+	  // Buttons: support click + touch + pointer (best for mobile)
+	  wrap.querySelectorAll('[data-rdir]').forEach(btn=>{
+	    const dir = parseInt(btn.dataset.rdir, 10) || 0;
+	
+	    btn.addEventListener('click', ()=> go(dir));
+	
+	    btn.addEventListener('touchend', (e)=>{
+	      e.preventDefault();
+	      go(dir);
+	    }, { passive:false });
+	
+	    btn.addEventListener('pointerup', ()=> go(dir));
+	  });
+	
+	  // Swipe (mobile): left/right to change
+	  let startX = 0, startY = 0, dragging = false;
+	
+	  viewport.addEventListener('touchstart', (e)=>{
+	    if(!e.touches || !e.touches[0]) return;
+	    dragging = true;
+	    startX = e.touches[0].clientX;
+	    startY = e.touches[0].clientY;
+	  }, { passive:true });
+	
+	  viewport.addEventListener('touchend', (e)=>{
+	    if(!dragging) return;
+	    dragging = false;
+	
+	    const t = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0] : null;
+	    if(!t) return;
+	
+	    const dx = t.clientX - startX;
+	    const dy = t.clientY - startY;
+	
+	    // ignore mostly-vertical moves
+	    if(Math.abs(dy) > Math.abs(dx)) return;
+	
+	    if(dx > 40) go(-1);
+	    else if(dx < -40) go(1);
+	  }, { passive:true });
+	
+	  function start(){
+	    if(!autoplay || pageCount() <= 1) return;
+	    stop();
+	    timer = setInterval(()=>{ go(1); }, interval);
+	  }
+	  function stop(){ if(timer){ clearInterval(timer); timer=null; } }
+	  function restart(){ stop(); start(); }
+	
+	  wrap.addEventListener('mouseenter', stop);
+	  wrap.addEventListener('mouseleave', start);
+	  wrap.addEventListener('touchstart', stop, {passive:true});
+	  wrap.addEventListener('touchend', start, {passive:true});
+	  window.addEventListener('resize', ()=>{ buildDots(); render(false); });
+	
+	  buildDots();
+	  render(false);
+	  start();
+	})();
+</script>
 </body>
 </html>
