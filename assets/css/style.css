@@ -669,3 +669,88 @@ footer{
 /* keep your existing .gallery and .g rules */
 /* Desktop: 3 cols (already) */
 /* Mobile from your CSS: .gallery becomes 2 cols / 1 col */
+
+/* ===== Reviews ===== */
+.reviews-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.rh-left{ display:flex; flex-direction:column; gap:6px; }
+.stars{ letter-spacing: 2px; font-weight: 900; }
+.rating-line{ display:flex; align-items:baseline; gap: 8px; }
+.rating-line b{ font-size: 20px; }
+.muted{ color: rgba(176,186,198,.92); font-size: 13px; }
+.dot{ opacity:.7; }
+
+.reviews-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap: 12px;
+  margin: 10px 0;
+}
+.reviews-dots{ display:flex; gap: 8px; flex-wrap: wrap; }
+.rdot{
+  width: 9px; height: 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(176,186,198,.35);
+  background: rgba(255,255,255,.10);
+  cursor:pointer;
+}
+.rdot.is-active{
+  background: linear-gradient(135deg, var(--orange), #9a3412);
+  border-color: rgba(255,255,255,.18);
+}
+
+.reviews-viewport{
+  overflow:hidden;
+  border-radius: 18px;
+}
+.reviews-track{
+  display:flex;
+  gap: 12px;
+  transition: transform .35s ease;
+  will-change: transform;
+}
+
+/* Review card */
+.review{
+  flex: 0 0 calc((100% - 48px) / 5); /* 5 visible on desktop: 4 gaps * 12px = 48px */
+  border-radius: 18px;
+  border: 1px solid rgba(176,186,198,.22);
+  background: rgba(255,255,255,.06);
+  padding: 14px;
+  min-height: 190px;
+  display:flex;
+  flex-direction:column;
+  gap: 10px;
+}
+.review-top{ display:flex; align-items:center; justify-content:space-between; gap: 10px; }
+.review-name{ font-weight: 900; font-size: 13px; }
+.review-time{ color: rgba(176,186,198,.92); font-size: 12px; white-space:nowrap; }
+.review-stars{ letter-spacing: 1px; font-weight: 900; font-size: 12px; opacity: .95; }
+.review-text{
+  color: rgba(255,255,255,.82);
+  font-size: 13px;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow:hidden;
+}
+
+/* Tablet: 2–3 visible */
+@media (max-width: 980px){
+  .review{ flex-basis: calc((100% - 24px) / 3); }
+}
+
+/* Mobile: 1 per view (carousel) */
+@media (max-width: 780px){
+  .reviews-head{ flex-direction:column; align-items:flex-start; }
+  .reviews-head .btn{ width: 100%; }
+
+  .review{ flex-basis: 100%; } /* 1 per screen */
+}
