@@ -590,3 +590,28 @@ footer{
   }
 
 }
+/* ===== Fix: drawer links should NOT override .btn ===== */
+.drawer-card a.btn{
+  display: inline-flex;              /* vuelve a comportarse como botón */
+  padding: 10px 14px;                /* usa el padding del botón */
+  border: 1px solid rgba(176,186,198,.28);
+  background: rgba(255,255,255,.06);
+  justify-content: center;           /* centra texto */
+  text-align: center;
+}
+
+/* respeta el estilo primary dentro del drawer */
+.drawer-card a.btn.primary{
+  background: linear-gradient(135deg, var(--orange), #9a3412);
+  border-color: rgba(255,255,255,.18);
+}
+
+/* opcional: hover dentro del drawer igual que afuera */
+.drawer-card a.btn:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.09);
+  border-color: rgba(176,186,198,.38);
+}
+.drawer-card a.btn.primary:hover{
+  background: linear-gradient(135deg, #d45116, #9a3412);
+}
