@@ -587,33 +587,21 @@
 		    }
 		  }
 		
-		  function render(user=false){
-		    const pv = perView();
-		    const card = track.querySelector('.review');
-		    if(!card) return;
-		
-		    const cardW = card.getBoundingClientRect().width;
-		    // Lee el gap real desde CSS (mejor que hardcodear 12)
-			const gap = parseFloat(getComputedStyle(track).gap || '12');
+			function render(user=false){
+			  clampIdx();
 			
-			// Ancho exacto de una “página”: pv cards + (pv-1) gaps
-			const step = (cardW * pv) + (gap * (pv - 1));
+			  const viewport = wrap.querySelector('.reviews-viewport');
+			  const vw = viewport.getBoundingClientRect().width;
 			
-			track.style.transform = `translateX(${-idx * step}px)`;
-		
-		    // Clamp idx to valid pages after resize
-		    const pc = pageCount();
-		    if(idx > pc-1) idx = pc-1;
-		
-		    track.style.transform = `translateX(${-idx * step}px)`;
-		
-		    // update dots
-		    Array.from(dotsHost.querySelectorAll('.rdot')).forEach((d,i)=>{
-		      d.classList.toggle('is-active', i===idx);
-		    });
-		
-		    if(user) restart();
-		  }
+			  track.style.transform = `translateX(${-idx * vw}px)`;
+			
+			  // update dots
+			  Array.from(dotsHost.querySelectorAll('.rdot')).forEach((d,i)=>{
+			    d.classList.toggle('is-active', i===idx);
+			  });
+			
+			  if(user) restart();
+			}
 		
 		  function go(dir){
 		    const pc = pageCount();
@@ -637,7 +625,11 @@
 		  wrap.addEventListener('mouseleave', start);
 		  wrap.addEventListener('touchstart', stop, {passive:true});
 		  wrap.addEventListener('touchend', start, {passive:true});
-		  window.addEventListener('resize', ()=>{ buildDots(); render(false); });
+		  window.addEventListener('resize', ()=>{
+			  clampIdx();
+			  buildDots();
+			  render(false);
+		  });
 		
 		  function escapeHtml(s){
 		    return String(s)
