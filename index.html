@@ -245,19 +245,42 @@
           <p>Placeholders for now — swap each block with real before/after photos anytime.</p>
         </div>
 
-	<div class="gallery">
-	  <div class="g" style="background-image:url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80')"></div>
-	
-	  <div class="g" style="background-image:url('./assets/img/IMG_5519.jpg?auto=format&fit=crop&w=1200&q=80')"></div>
-	
-	  <div class="g" style="background-image:url('https://images.unsplash.com/photo-1501183638710-841dd1904471?auto=format&fit=crop&w=1200&q=80')"></div>
-	
-	  <div class="g" style="background-image:url('https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80')"></div>
-	
-	  <div class="g" style="background-image:url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80')"></div>
-	
-	  <div class="g" style="background-image:url('https://images.unsplash.com/photo-1560185008-b033106af5c3?auto=format&fit=crop&w=1200&q=80')"></div>
-	</div>
+	<div class="gallery-wrap" data-autoplay="true" data-interval="4500">
+		  <div class="gallery-top">
+		    <div class="gallery-dots" aria-label="Gallery pagination"></div>
+		    <div class="gallery-nav" aria-label="Gallery controls">
+		      <button class="gbtn" type="button" data-dir="-1">Prev</button>
+		      <button class="gbtn" type="button" data-dir="1">Next</button>
+		    </div>
+		  </div>
+
+		  <div class="gallery-viewport">
+		    <div class="gallery-track">
+		      <div class="gallery-page">
+		        <div class="gallery">
+		          <div class="g" style="background-image:url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80')"></div>
+		          <div class="g" style="background-image:url('./assets/img/IMG_5519.jpg')"></div>
+		          <div class="g" style="background-image:url('https://images.unsplash.com/photo-1501183638710-841dd1904471?auto=format&fit=crop&w=1200&q=80')"></div>
+		          <div class="g" style="background-image:url('https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80')"></div>
+		          <div class="g" style="background-image:url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80')"></div>
+		          <div class="g" style="background-image:url('https://images.unsplash.com/photo-1560185008-b033106af5c3?auto=format&fit=crop&w=1200&q=80')"></div>
+		        </div>
+		      </div>
+		
+		      <!-- Si quieres MÁS grupos, duplica esta "gallery-page" y cambia las imágenes -->
+		      <div class="gallery-page">
+		        <div class="gallery">
+		          <div class="g" style="background-image:url('https://images.unsplash.com/photo-1581091215367-59ab6b7b1fdd?auto=format&fit=crop&w=1200&q=80')"></div>
+		          <div class="g" style="background-image:url('https://images.unsplash.com/photo-1523413651479-597eb2da0ad6?auto=format&fit=crop&w=1200&q=80')"></div>
+		          <div class="g" style="background-image:url('https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1200&q=80')"></div>
+		          <div class="g" style="background-image:url('https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=80')"></div>
+		          <div class="g" style="background-image:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80')"></div>
+		          <div class="g" style="background-image:url('https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1200&q=80')"></div>
+		        </div>
+		      </div>
+		    </div>
+		  </div>
+		</div>
       </div>
     </section>
 
@@ -383,5 +406,71 @@
       e.target.reset();
     });
   </script>
+  <script>
+		(function(){
+		  const wrap = document.querySelector('.gallery-wrap');
+		  if(!wrap) return;
+		
+		  const track = wrap.querySelector('.gallery-track');
+		  const pages = Array.from(wrap.querySelectorAll('.gallery-page'));
+		  const dotsHost = wrap.querySelector('.gallery-dots');
+		  const interval = parseInt(wrap.dataset.interval || '4500', 10);
+		  const autoplay = (wrap.dataset.autoplay || 'true') === 'true';
+		
+		  let idx = 0;
+		  let timer = null;
+		
+		  // dots
+		  pages.forEach((_, i) => {
+		    const d = document.createElement('button');
+		    d.type = 'button';
+		    d.className = 'gdot' + (i===0 ? ' is-active' : '');
+		    d.setAttribute('aria-label', 'Go to page ' + (i+1));
+		    d.addEventListener('click', () => go(i, true));
+		    dotsHost.appendChild(d);
+		  });
+		
+		  const dots = Array.from(wrap.querySelectorAll('.gdot'));
+		
+		  function render(){
+		    track.style.transform = `translateX(${-idx*100}%)`;
+		    dots.forEach((d,i)=> d.classList.toggle('is-active', i===idx));
+		  }
+		
+		  function go(next, user=false){
+		    idx = (next + pages.length) % pages.length;
+		    render();
+		    if(user) restart();
+		  }
+		
+		  function step(dir){
+		    go(idx + dir, true);
+		  }
+		
+		  wrap.querySelectorAll('[data-dir]').forEach(btn=>{
+		    btn.addEventListener('click', ()=> step(parseInt(btn.dataset.dir,10)));
+		  });
+		
+		  function start(){
+		    if(!autoplay || pages.length <= 1) return;
+		    stop();
+		    timer = setInterval(()=> go(idx+1, false), interval);
+		  }
+		  function stop(){ if(timer){ clearInterval(timer); timer=null; } }
+		  function restart(){ stop(); start(); }
+		
+		  // pause on hover / touch
+		  wrap.addEventListener('mouseenter', stop);
+		  wrap.addEventListener('mouseleave', start);
+		  wrap.addEventListener('touchstart', stop, {passive:true});
+		  wrap.addEventListener('touchend', start, {passive:true});
+		
+		  // keep correct on resize
+		  window.addEventListener('resize', render);
+		
+		  render();
+		  start();
+		})();
+	</script>
 </body>
 </html>
