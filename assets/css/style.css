@@ -756,3 +756,6 @@ footer{
 }
 .reviews-track{ align-items: stretch; }
 .review{ height: 100%; }
+.reviews-top{ position: relative; z-index: 2; }
+.reviews-viewport{ position: relative; z-index: 1; touch-action: pan-y; }
+.gbtn{ touch-action: manipulation; }
