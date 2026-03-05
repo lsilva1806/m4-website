@@ -217,7 +217,7 @@ h1{
   border: 1px solid rgba(176,186,198,.22);
   background: rgba(255,255,255,.06);
   position:relative;
-  min-height: 320px;
+  min-height: 400px;
   background-image: url('../img/hardwood.jpeg');
   background-size: cover;
   background-position: center;
