@@ -349,7 +349,7 @@
 
         <div class="contact">
           <div class="panel">
-            <form id="contactForm">
+            <form id="contactForm" action="https://formspree.io/f/mreyebga" method="POST">
               <div>
                 <label for="name">Full Name</label>
                 <input id="name" name="name" placeholder="Your name" required />
@@ -455,11 +455,27 @@
     document.getElementById('closeDrawer')?.addEventListener('click', () => drawer.classList.remove('open'));
     drawer.addEventListener('click', (e) => { if (e.target === drawer) drawer.classList.remove('open'); });
 
-    document.getElementById('contactForm')?.addEventListener('submit', (e) => {
-      e.preventDefault();
-      alert('Thanks! Your message is ready to be sent. Connect this form to your email/backend.');
-      e.target.reset();
-    });
+	document.getElementById('contactForm')?.addEventListener('submit', async (e) => {
+	  e.preventDefault();
+	
+	  const form = e.target;
+	  const data = new FormData(form);
+	
+	  const res = await fetch(form.action, {
+	    method: "POST",
+	    body: data,
+	    headers: {
+	      'Accept': 'application/json'
+	    }
+	  });
+	
+	  if (res.ok) {
+	    alert("Thank you! Your message has been sent.");
+	    form.reset();
+	  } else {
+	    alert("Oops! Something went wrong. Please try again.");
+	  }
+	});
   </script>
   <script>
 		(function(){
